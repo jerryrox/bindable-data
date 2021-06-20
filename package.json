@@ -1,5 +1,5 @@
 {
-  "name": "bindable",
+  "name": "bindable-data",
   "author": "Jerry Kim <jerryrox@live.co.kr>",
   "version": "0.0.1",
   "main": "./lib/index.js",
@@ -30,10 +30,11 @@
     "typescript": "^3.9.3"
   },
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
+    "build": "tsc && cp {package.json,README.md} ./lib",
     "test": "npm run lint && npm run test:jest",
     "test:jest": "./node_modules/.bin/jest --runInBand",
-    "lint": "./node_modules/.bin/tslint --config tslint.json --project ."
+    "lint": "./node_modules/.bin/tslint --config tslint.json --project .",
+    "clean": "rm -rf ./lib",
+    "deploy": "npm run clean && npm run build && npm publish ./lib"
   }
 }
