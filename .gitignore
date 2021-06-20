@@ -106,3 +106,5 @@ dist
 
 # Others
 .DS_Store
+
+/lib
