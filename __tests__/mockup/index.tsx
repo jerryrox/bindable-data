@@ -5,14 +5,12 @@ import { useBindableUnsafe } from "../../src/useBindable";
 
 interface ILabelDisplayerProp {
     bindable: Bindable<string>;
-    onChange?: (value: string) => void;
 }
 export const LabelDisplayer = ({
     bindable,
-    onChange,
 }: ILabelDisplayerProp) => {
 
-    const boundData = useBindable(bindable, onChange);
+    const boundData = useBindable(bindable);
 
     return (
         <div>
@@ -24,14 +22,12 @@ export const LabelDisplayer = ({
 
 interface INullableTestParam {
     bindable: Bindable<string> | null | undefined;
-    onChange?: (value: string | undefined) => void;
 }
-const NullableTest = ({
+export const NullableTest = ({
     bindable,
-    onChange,
 }: INullableTestParam) => {
 
-    const data = useBindableUnsafe(bindable, onChange);
+    const data = useBindableUnsafe(bindable);
 
     return (
         <div>
@@ -39,4 +35,37 @@ const NullableTest = ({
         </div>
     );
 };
-export default NullableTest;
+
+
+interface IArrayDisplayerProp {
+    bindable: Bindable<string[]>;
+}
+export const ArrayDisplayer = ({
+    bindable,
+}: IArrayDisplayerProp) => {
+
+    const boundData = useBindable(bindable);
+
+    return (
+        <div>
+            <p>{JSON.stringify(boundData)}</p>
+        </div>
+    );
+};
+
+
+interface INullableArrayDisplayerProp {
+    bindable: Bindable<string[]> | null | undefined;
+}
+export const NullableArrayDisplayer = ({
+    bindable,
+}: INullableArrayDisplayerProp) => {
+
+    const boundData = useBindableUnsafe(bindable);
+
+    return (
+        <div>
+            <p>{boundData === undefined ? "undefined" : JSON.stringify(boundData)}</p>
+        </div>
+    );
+};

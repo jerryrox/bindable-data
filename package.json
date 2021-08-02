@@ -36,5 +36,9 @@
     "lint": "./node_modules/.bin/tslint --config tslint.json --project .",
     "clean": "rm -rf ./lib",
     "deploy": "npm run clean && npm run build && npm publish ./lib"
+  },
+  "dependencies": {
+    "@types/uuid": "^8.3.1",
+    "uuid": "^8.3.2"
   }
 }
