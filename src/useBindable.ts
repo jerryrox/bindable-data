@@ -15,6 +15,7 @@ export default function useBindable<T>(bindable: Bindable<T>): T {
         const subscription = bindable.subscribe(() => {
             setId(v1());
         });
+        setId(v1());
         return () => {
             bindable.unsubscribe(subscription);
         };
@@ -41,6 +42,7 @@ export function useBindableUnsafe<T>(bindable: Bindable<T> | null | undefined): 
         const subscription = bindable.subscribe(() => {
             setId(v1());
         });
+        setId(v1());
         return () => {
             bindable.unsubscribe(subscription);
         };
