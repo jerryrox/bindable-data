@@ -1,4 +1,4 @@
-type Action<T = any> = (t: T) => any;
+type Action<T = any> = (value: T, prevValue: T) => any;
 
 class ListenerInfo<T> {
 
@@ -94,10 +94,11 @@ export default class Bindable<T> {
         if(this._triggerWhenDifferent && this._value === value) {
             return;
         }
+        const prevValue = this._value;
         this._value = value;
 
         if (trigger === true) {
-            this.trigger();
+            this.triggerInternal(value, prevValue);
         }
     }
 
@@ -119,7 +120,7 @@ export default class Bindable<T> {
      */
     subscribeAndTrigger(callback: Action<T>): number {
         const id = this.subscribe(callback);
-        callback(this._value);
+        callback(this._value, this._value);
         return id;
     }
 
@@ -143,7 +144,7 @@ export default class Bindable<T> {
     bind(callback: Action<T>, trigger: boolean = true): void {
         this.subscribe(callback);
         if(trigger) {
-            callback(this._value);
+            callback(this._value, this._value);
         }
     }
 
@@ -164,11 +165,18 @@ export default class Bindable<T> {
      * Manually triggers all listeners' callback functions.
      */
     trigger() {
+        this.triggerInternal(this._value, this._value);
+    }
+
+    /**
+     * Handles the actual trigger() functionality.
+     */
+    private triggerInternal(value: T, prevValue: T) {
         for (let i = this._listeners.length - 1; i >= 0; i--) {
             const listener = this._listeners[i];
             if (listener !== null && listener !== undefined &&
                 listener.callback !== null && listener.callback !== undefined) {
-                listener.callback(this._value);
+                listener.callback(value, prevValue);
             }
             else {
                 this._listeners.splice(i, 1);

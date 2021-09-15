@@ -269,3 +269,23 @@ test("Test bind/unbind", () => {
     expect(bindable.getValue()).toBe("b");
     expect(callbackedValue).toBe("b");
 });
+
+test("Prev value on trigger calls", () => {
+    const bindable = new Bindable<number[]>([]);
+
+    let triggeredValue: number[] = [];
+    let triggeredPrev: number[] = [];
+    bindable.bind((value, prev) => {
+        triggeredValue = value;
+        triggeredPrev = prev;
+    }, true);
+    expect(triggeredValue).toBe(triggeredPrev);
+
+    bindable.value = [1];
+    expect(triggeredValue).toMatchObject([1]);
+    expect(triggeredPrev).toMatchObject([]);
+    expect(triggeredValue).not.toBe(triggeredPrev);
+
+    bindable.trigger();
+    expect(triggeredValue).toBe(triggeredPrev);
+});

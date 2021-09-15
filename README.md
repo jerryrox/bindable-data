@@ -2,6 +2,9 @@
 A smaller version of the parent project `bindable-bloc`.
 
 ## Versions
+### 0.1.2
+- Added support to receive the previous value upon bindable trigger event.
+
 ### 0.1.1
 - Potential fix for weird initial behavior when called `useBindable`.
 
